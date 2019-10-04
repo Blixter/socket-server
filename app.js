@@ -7,14 +7,14 @@ const io = require('socket.io')(server);
 // Users on the chatroom
 var numUsers = 0;
 
-io.origins(['https://blixter.me:443'])
+// io.origins(['https://blixter.me:443'])
 
 io.on('connection', function (socket) {
     var addedUser = false;
 
     // User posted a new message - broadcast to everyone else.
     socket.on('new message', function (message) {
-        socket.emit('new message', {
+        socket.broadcast.emit('new message', {
             username: socket.username,
             time: message.time,
             message: message.message
