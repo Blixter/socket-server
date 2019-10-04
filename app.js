@@ -14,7 +14,7 @@ io.on('connection', function (socket) {
 
     // User posted a new message - broadcast to everyone else.
     socket.on('new message', function (message) {
-        socket.broadcast.emit('new message', {
+        socket.emit('new message', {
             username: socket.username,
             time: message.time,
             message: message.message
