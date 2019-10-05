@@ -13,12 +13,13 @@ io.on('connection', function (socket) {
     var addedUser = false;
 
     // User posted a new message - broadcast to everyone else.
-    socket.on('new message', function (message) {
+    socket.on('new message', (message, callback) => {
         socket.broadcast.emit('new message', {
             username: socket.username,
             time: message.time,
             message: message.message
-        });
+        })
+        callback("received");
     });
 
     // Add user to the current session
