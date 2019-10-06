@@ -33,10 +33,10 @@ io.on('connection', function (socket) {
         });
 
         //Echo to everyone that the user has connected.
-        socket.emit('new message', {
+        io.emit('new message', {
             username: 'admin',
             time: "now",
-            message: `${username} has join the chat.`
+            message: `${username} has joined the chat.`
         });
     });
 
