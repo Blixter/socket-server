@@ -6,7 +6,7 @@ const io = require('socket.io')(server);
 
 // Getting the current time in HH:MM-format.
 function getTime() {
-    return new Date().toLocaleTimeString('en-GB', { hour: "numeric", 
+    return new Date().toLocaleTimeString('en-GB', { hour12: false, hour: "numeric", 
         minute: "numeric"});
   }
 
@@ -51,11 +51,12 @@ io.on('connection', function (socket) {
         if (addedUser) {
             --numUsers;
 
-            // Echo to everyone that the user left.
-            socket.broadcast.emit('user left', {
-                username: socket.username,
-                numUsers: numUsers
-            });
+        //Echo to everyone that the user has disconnected.
+        io.emit('new message', {
+            username: 'Admin',
+            time: getTime(),
+            message: `${username} has left the chat.`
+        });
         }
     });
 });
