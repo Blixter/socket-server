@@ -4,6 +4,12 @@ const app = express();
 const server = require('http').createServer(app);
 const io = require('socket.io')(server);
 
+// Getting the current time in HH:MM-format.
+function getTime() {
+    return new Date().toLocaleTimeString('en-GB', { hour: "numeric", 
+        minute: "numeric"});
+  }
+
 // Users on the chatroom
 var numUsers = 0;
 
@@ -34,8 +40,8 @@ io.on('connection', function (socket) {
 
         //Echo to everyone that the user has connected.
         io.emit('new message', {
-            username: 'admin',
-            time: "now",
+            username: 'Admin',
+            time: getTime(),
             message: `${username} has joined the chat.`
         });
     });
