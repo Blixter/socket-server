@@ -19,7 +19,7 @@ io.on('connection', function (socket) {
             time: message.time,
             message: message.message
         })
-        callback("received");
+        callback();
     });
 
     // Add user to the current session
@@ -33,9 +33,10 @@ io.on('connection', function (socket) {
         });
 
         //Echo to everyone that the user has connected.
-        socket.broadcast.emit('user joined', {
-            username: socket.username,
-            numUsers: numUsers
+        socket.emit('new message', {
+            username: 'admin',
+            time: "now",
+            message: `${username} has join the chat.`
         });
     });
 
