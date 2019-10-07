@@ -13,7 +13,7 @@ function getTime() {
 // Users on the chatroom
 var numUsers = 0;
 
-// io.origins(['https://blixter.me:443'])
+io.origins(['https://blixter.me:443'])
 
 io.on('connection', function (socket) {
     var addedUser = false;
@@ -50,14 +50,14 @@ io.on('connection', function (socket) {
     socket.on('disconnect', () => {
         if (addedUser) {
             --numUsers;
-
-        //Echo to everyone that the user has disconnected.
+    //Echo to everyone that the user has disconnected.
         io.emit('new message', {
             username: 'Admin',
             time: getTime(),
-            message: `${username} has left the chat.`
+            message: `${socket.username} has left the chat.`
         });
         }
+
     });
 });
 
