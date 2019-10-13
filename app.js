@@ -16,9 +16,7 @@ function getTime() {
 // Users on the chatroom
 var numUsers = 0;
 
-// io.origins(['https://blixter.me:443'])
-io.origins('*:*') 
-
+io.origins(['https://blixter.me:443'])
 
 io.on('connection', function (socket) {
     var addedUser = false;
@@ -89,7 +87,7 @@ io.on('connection', function (socket) {
             message: `${socket.username} has left the chat.`
         });
         }
-	// Save to db as a message.
+	  // Save to db as a message.
         axios.post('https://me-api.blixter.me/chat', {
             username: "Admin",
             time: getTime(),
