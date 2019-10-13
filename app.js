@@ -4,6 +4,9 @@ const app = express();
 const server = require('http').createServer(app);
 const io = require('socket.io')(server);
 
+const axios = require('axios');
+
+
 // Getting the current time in HH:MM-format.
 function getTime() {
     return new Date().toLocaleTimeString('en-GB', { hour12: false, hour: "numeric", 
@@ -25,6 +28,20 @@ io.on('connection', function (socket) {
             time: message.time,
             message: message.message
         })
+
+        // Save all messages posted to the database.
+        axios.post('http://localhost:1337/chat', {
+            username: socket.username,
+            time: message.time,
+            message: message.message
+          })
+          .then(function (response) {
+            console.log(response);
+          })
+          .catch(function (error) {
+            console.log(error);
+          });
+
         callback();
     });
 
@@ -44,6 +61,19 @@ io.on('connection', function (socket) {
             time: getTime(),
             message: `${username} has joined the chat.`
         });
+
+        // Save to db as a message.
+        axios.post('http://localhost:1337/chat', {
+            username: "Admin",
+            time: getTime(),
+            message: `${username} has joined the chat.`
+          })
+          .then(function (response) {
+            console.log(response);
+          })
+          .catch(function (error) {
+            console.log(error);
+          });
     });
 
     // When the user disconnects
