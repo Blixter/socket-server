@@ -16,7 +16,9 @@ function getTime() {
 // Users on the chatroom
 var numUsers = 0;
 
-io.origins(['https://blixter.me:443'])
+// io.origins(['https://blixter.me:443'])
+io.origins('*:*') 
+
 
 io.on('connection', function (socket) {
     var addedUser = false;
@@ -30,7 +32,7 @@ io.on('connection', function (socket) {
         })
 
         // Save all messages posted to the database.
-        axios.post('http://localhost:1337/chat', {
+        axios.post('https://me-api.blixter.me/chat', {
             username: socket.username,
             time: message.time,
             message: message.message
@@ -63,7 +65,7 @@ io.on('connection', function (socket) {
         });
 
         // Save to db as a message.
-        axios.post('http://localhost:1337/chat', {
+        axios.post('https://me-api.blixter.me/chat', {
             username: "Admin",
             time: getTime(),
             message: `${username} has joined the chat.`
@@ -87,6 +89,19 @@ io.on('connection', function (socket) {
             message: `${socket.username} has left the chat.`
         });
         }
+	// Save to db as a message.
+        axios.post('https://me-api.blixter.me/chat', {
+            username: "Admin",
+            time: getTime(),
+            message: `${socket.username} has left the chat.`
+          })
+          .then(function (response) {
+            console.log(response);
+          })
+          .catch(function (error) {
+            console.log(error);
+          });
+
 
     });
 });
