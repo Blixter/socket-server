@@ -61,19 +61,6 @@ io.on('connection', function (socket) {
             time: getTime(),
             message: `${username} has joined the chat.`
         });
-
-        // Save to db as a message.
-        axios.post('https://me-api.blixter.me/chat', {
-            username: "Admin",
-            time: getTime(),
-            message: `${username} has joined the chat.`
-          })
-          .then(function (response) {
-            console.log(response);
-          })
-          .catch(function (error) {
-            console.log(error);
-          });
     });
 
     // When the user disconnects
@@ -87,20 +74,6 @@ io.on('connection', function (socket) {
             message: `${socket.username} has left the chat.`
         });
         }
-	  // Save to db as a message.
-        axios.post('https://me-api.blixter.me/chat', {
-            username: "Admin",
-            time: getTime(),
-            message: `${socket.username} has left the chat.`
-          })
-          .then(function (response) {
-            console.log(response);
-          })
-          .catch(function (error) {
-            console.log(error);
-          });
-
-
     });
 });
 
